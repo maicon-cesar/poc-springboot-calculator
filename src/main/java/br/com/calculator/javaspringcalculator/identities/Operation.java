@@ -8,6 +8,13 @@ public class Operation {
 	private String oper;
 	
 	private Double output;
+	
+	public Operation(Double input1, Double input2, String oper) {
+		super();
+		this.input1 = input1;
+		this.input2 = input2;
+		this.oper = oper;
+	}
 
 	public Double getOutput() {
 		return output;

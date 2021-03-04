@@ -5,33 +5,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.calculator.javaspringcalculator.Calculator;
 import br.com.calculator.javaspringcalculator.identities.Operation;
+import br.com.calculator.javaspringcalculator.services.CalculatorServices;
 
 @RestController
 @RequestMapping("/calculator2")
 public class Calculator2Controller {
 	
+	private CalculatorServices calculatorServices;
+	
+    public Calculator2Controller(CalculatorServices calculatorServices) {
+        this.calculatorServices = calculatorServices;
+    }
+	
 	@PostMapping
 	public Operation calculate(@RequestBody Operation oper) {
 
-		Calculator calc = new Calculator();
-		
-		switch (oper.getOper()) {
-		case "add":
-			oper.setOutput(calc.add(oper.getInput1(), oper.getInput2()));
-			break;
-		case "div":
-			oper.setOutput(calc.div(oper.getInput1(), oper.getInput2()));			
-			break;
-		case "mul":
-			oper.setOutput(calc.mul(oper.getInput1(), oper.getInput2()));
-			break;
-		case "sub":
-			oper.setOutput(calc.sub(oper.getInput1(), oper.getInput2()));			
-			break;
-		}
-		
+		Double res = calculatorServices.executeCalcutation(oper.getInput1(), oper.getInput2(), oper.getOper());		
+		oper.setOutput(res);
+			
 		return oper;
 	}	
 }
