@@ -1,5 +1,6 @@
 package br.com.calculator.javaspringcalculator;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -18,11 +19,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.util.LinkedMultiValueMap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mongodb.BasicDBObjectBuilder;
+import com.mongodb.DBObject;
 
 import br.com.calculator.javaspringcalculator.identities.Operation;
 import br.com.calculator.javaspringcalculator.services.CalculatorServices;
@@ -141,7 +145,7 @@ public class JavaSpringCalculatorApplicationTests {
     
     @Test
     void Calculator2AddTest() throws Exception {
-    	Operation oper = new Operation(3.0, 2.0, "add");
+    	Operation oper = new Operation(3.0, 2.0, "add", 5.0);
     	
     	Double result = 5.0;
         Mockito.when(calculatorServices.executeCalcutation(3.0, 2.0, "add")).thenReturn(result);
@@ -155,7 +159,7 @@ public class JavaSpringCalculatorApplicationTests {
    
     @Test
     void Calculator2SubTest() throws Exception {
-    	Operation oper = new Operation(8.0, 5.0, "sub");
+    	Operation oper = new Operation(8.0, 5.0, "sub", 3.0);
     	
     	Double result = 3.0;
         Mockito.when(calculatorServices.executeCalcutation(8.0, 5.0, "sub")).thenReturn(result);
@@ -169,7 +173,7 @@ public class JavaSpringCalculatorApplicationTests {
     
     @Test
     void Calculator2MulTest() throws Exception {
-    	Operation oper = new Operation(3.0, 2.0, "mul");
+    	Operation oper = new Operation(3.0, 2.0, "mul", 6.0);
     	
     	Double result = 6.0;
         Mockito.when(calculatorServices.executeCalcutation(3.0, 2.0, "mul")).thenReturn(result);
@@ -183,7 +187,7 @@ public class JavaSpringCalculatorApplicationTests {
     
     @Test
     void Calculator2DivTest() throws Exception {
-    	Operation oper = new Operation(5.0, 2.0, "div");
+    	Operation oper = new Operation(5.0, 2.0, "div", 2.5);
     	
     	Double result = 2.5;
         Mockito.when(calculatorServices.executeCalcutation(5.0, 2.0, "div")).thenReturn(result);
@@ -194,4 +198,23 @@ public class JavaSpringCalculatorApplicationTests {
 	            .andExpect(status().isOk())
 	            .andExpect(jsonPath("output").value("2.5"));
     }
+	
+    @Test
+    void CalculatorTestHistoric() throws Exception {
+	    mockMvc.perform(get("/historic")
+	            .contentType("application/json"))
+	            .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+    
+    @Test
+    void TestMongoDB(@Autowired MongoTemplate mongoTemplate) {
+        DBObject objectToSave = BasicDBObjectBuilder.start()
+            .add("key", "value")
+            .get();
+
+        mongoTemplate.save(objectToSave, "collection_test");
+
+        assertThat(mongoTemplate.findAll(DBObject.class, "collection_test")).extracting("key")
+            .containsOnly("value");
+    }    
 }
