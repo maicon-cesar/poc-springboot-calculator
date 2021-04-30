@@ -83,7 +83,7 @@ public class JavaSpringCalculatorApplicationTests {
     @Test
     public void Calculator1TestAddCalc() throws Exception {   	
     	Double result = 10.0;
-        Mockito.when(calculatorServices.executeCalcutation(2.0, 8.0, "add")).thenReturn(result);
+        Mockito.when(calculatorServices.executeCalculation(2.0, 8.0, "add")).thenReturn(result);
         
         LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
 		requestParams.add("num1", "2.0");
@@ -98,7 +98,7 @@ public class JavaSpringCalculatorApplicationTests {
     @Test
     public void Calculator1TestSubCalc() throws Exception {   	
     	Double result = 10.0;
-        Mockito.when(calculatorServices.executeCalcutation(15.0, 5.0, "sub")).thenReturn(result);
+        Mockito.when(calculatorServices.executeCalculation(15.0, 5.0, "sub")).thenReturn(result);
         
         LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
 		requestParams.add("num1", "15.0");
@@ -113,7 +113,7 @@ public class JavaSpringCalculatorApplicationTests {
     @Test
     public void Calculator1TestMulCalc() throws Exception {   	
     	Double result = 21.0;
-        Mockito.when(calculatorServices.executeCalcutation(3.0, 7.0, "mul")).thenReturn(result);
+        Mockito.when(calculatorServices.executeCalculation(3.0, 7.0, "mul")).thenReturn(result);
         
         LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
 		requestParams.add("num1", "3.0");
@@ -128,7 +128,7 @@ public class JavaSpringCalculatorApplicationTests {
     @Test
     public void Calculator1TestDivCalc() throws Exception {   	
     	Double result = 25.0;
-        Mockito.when(calculatorServices.executeCalcutation(50.0, 2.0, "div")).thenReturn(result);
+        Mockito.when(calculatorServices.executeCalculation(50.0, 2.0, "div")).thenReturn(result);
         
         LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
 		requestParams.add("num1", "50.0");
@@ -148,7 +148,7 @@ public class JavaSpringCalculatorApplicationTests {
     	Operation oper = new Operation(3.0, 2.0, "add", 5.0);
     	
     	Double result = 5.0;
-        Mockito.when(calculatorServices.executeCalcutation(3.0, 2.0, "add")).thenReturn(result);
+        Mockito.when(calculatorServices.executeCalculation(3.0, 2.0, "add")).thenReturn(result);
     	
 	    mockMvc.perform(post("/calculator2")
 	            .contentType("application/json")
@@ -162,7 +162,7 @@ public class JavaSpringCalculatorApplicationTests {
     	Operation oper = new Operation(8.0, 5.0, "sub", 3.0);
     	
     	Double result = 3.0;
-        Mockito.when(calculatorServices.executeCalcutation(8.0, 5.0, "sub")).thenReturn(result);
+        Mockito.when(calculatorServices.executeCalculation(8.0, 5.0, "sub")).thenReturn(result);
     	
 	    mockMvc.perform(post("/calculator2")
 	            .contentType("application/json")
@@ -176,7 +176,7 @@ public class JavaSpringCalculatorApplicationTests {
     	Operation oper = new Operation(3.0, 2.0, "mul", 6.0);
     	
     	Double result = 6.0;
-        Mockito.when(calculatorServices.executeCalcutation(3.0, 2.0, "mul")).thenReturn(result);
+        Mockito.when(calculatorServices.executeCalculation(3.0, 2.0, "mul")).thenReturn(result);
     	
 	    mockMvc.perform(post("/calculator2")
 	            .contentType("application/json")
@@ -190,7 +190,7 @@ public class JavaSpringCalculatorApplicationTests {
     	Operation oper = new Operation(5.0, 2.0, "div", 2.5);
     	
     	Double result = 2.5;
-        Mockito.when(calculatorServices.executeCalcutation(5.0, 2.0, "div")).thenReturn(result);
+        Mockito.when(calculatorServices.executeCalculation(5.0, 2.0, "div")).thenReturn(result);
     	
 	    mockMvc.perform(post("/calculator2")
 	            .contentType("application/json")
